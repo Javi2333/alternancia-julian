@@ -15,6 +15,7 @@ function PostCard({ post, onEliminar, onEditar, onDestacar }) {
   const [titulo, setTitulo] = useState(post.titulo)
   const [descripcion, setDescripcion] = useState(post.descripcion)
 
+  // Valida que los campos no estén vacíos y llama al callback de edición del padre
   const guardar = () => {
     if (!titulo.trim() || !descripcion.trim()) return
     onEditar(post.id, { titulo, descripcion })
@@ -78,6 +79,7 @@ function Blog() {
   const [descripcion, setDescripcion] = useState('')
   const [error, setError] = useState('')
 
+  // Crea un nuevo post y lo añade al principio de la lista si los campos son válidos
   const handleSubmit = (e) => {
     e.preventDefault()
     if (!titulo.trim() || !descripcion.trim()) {
@@ -93,12 +95,15 @@ function Blog() {
     setError('')
   }
 
+  // Elimina el post con el id indicado de la lista
   const eliminar = (id) => setPosts(prev => prev.filter(p => p.id !== id))
 
+  // Actualiza título y descripción del post con el id indicado
   const editar = (id, datos) => setPosts(prev =>
     prev.map(p => p.id === id ? { ...p, ...datos } : p)
   )
 
+  // Alterna el estado destacado del post con el id indicado
   const destacar = (id) => setPosts(prev =>
     prev.map(p => p.id === id ? { ...p, destacado: !p.destacado } : p)
   )
